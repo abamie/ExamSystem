@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Exam.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230528054204_AddQuestionsDb")]
-    partial class AddQuestionsDb
+    [Migration("20230529065508_AddStudentTable")]
+    partial class AddStudentTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,40 +25,7 @@ namespace Exam.DataAccess.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Exam.Model.ViewModels.Question", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ClassId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SubjectId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClassId");
-
-                    b.HasIndex("SubjectId");
-
-                    b.ToTable("Questions");
-                });
-
-            modelBuilder.Entity("Exam.Model.ViewModels.Standard", b =>
+            modelBuilder.Entity("Exam.Model.Standard", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -82,7 +49,7 @@ namespace Exam.DataAccess.Migrations
                     b.ToTable("Standards");
                 });
 
-            modelBuilder.Entity("Exam.Model.ViewModels.Student", b =>
+            modelBuilder.Entity("Exam.Model.Student", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -90,15 +57,13 @@ namespace Exam.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ClassId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreatedDateTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -108,19 +73,27 @@ namespace Exam.DataAccess.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
+                    b.Property<string>("RollNo")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("StandardId")
+                        .HasColumnType("int");
+
                     b.Property<int>("SubjectId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClassId");
+                    b.HasIndex("StandardId");
 
                     b.HasIndex("SubjectId");
 
                     b.ToTable("Students");
                 });
 
-            modelBuilder.Entity("Exam.Model.ViewModels.Subject", b =>
+            modelBuilder.Entity("Exam.Model.Subject", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -130,6 +103,9 @@ namespace Exam.DataAccess.Migrations
 
                     b.Property<DateTime>("CreatedDateTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("int");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -144,34 +120,15 @@ namespace Exam.DataAccess.Migrations
                     b.ToTable("Subjects");
                 });
 
-            modelBuilder.Entity("Exam.Model.ViewModels.Question", b =>
+            modelBuilder.Entity("Exam.Model.Student", b =>
                 {
-                    b.HasOne("Exam.Model.ViewModels.Standard", "Standard")
+                    b.HasOne("Exam.Model.Standard", "Standard")
                         .WithMany()
-                        .HasForeignKey("ClassId")
+                        .HasForeignKey("StandardId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Exam.Model.ViewModels.Subject", "Subject")
-                        .WithMany()
-                        .HasForeignKey("SubjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Standard");
-
-                    b.Navigation("Subject");
-                });
-
-            modelBuilder.Entity("Exam.Model.ViewModels.Student", b =>
-                {
-                    b.HasOne("Exam.Model.ViewModels.Standard", "Standard")
-                        .WithMany()
-                        .HasForeignKey("ClassId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Exam.Model.ViewModels.Subject", "Subject")
+                    b.HasOne("Exam.Model.Subject", "Subject")
                         .WithMany()
                         .HasForeignKey("SubjectId")
                         .OnDelete(DeleteBehavior.Cascade)

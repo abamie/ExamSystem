@@ -1,15 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
-namespace Exam.Model.ViewModels
+namespace Exam.Model
 {
-    public class Question
+    public class Choice
     {
         public int Id { get; set; }
 
@@ -17,7 +18,14 @@ namespace Exam.Model.ViewModels
         public string Name { get; set; }
 
         [Required]
-        public int QuestionNo { get; set; }
+        public string ChoiceNo { get; set; }
+
+        [Required]
+        [Display(Name = "Question")]
+        public int QuestionId { get; set; }
+        [ForeignKey("QuestionId")]
+        [ValidateNever]
+        public Question Question { get; set; }
 
 
         [Required]
@@ -37,6 +45,5 @@ namespace Exam.Model.ViewModels
         public bool IsActive { get; set; } = true;
 
         public DateTime CreatedDateTime { get; set; } = DateTime.Now;
-
     }
 }

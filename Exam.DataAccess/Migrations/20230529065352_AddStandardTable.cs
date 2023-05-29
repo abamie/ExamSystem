@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Exam.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class AddSubjectsDb : Migration
+    public partial class AddStandardTable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Subjects",
+                name: "Standards",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -23,7 +23,7 @@ namespace Exam.DataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Subjects", x => x.Id);
+                    table.PrimaryKey("PK_Standards", x => x.Id);
                 });
         }
 
@@ -31,7 +31,7 @@ namespace Exam.DataAccess.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Subjects");
+                name: "Standards");
         }
     }
 }

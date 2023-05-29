@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Exam.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230527135040_AddStandardsDb")]
-    partial class AddStandardsDb
+    [Migration("20230529065352_AddStandardTable")]
+    partial class AddStandardTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace Exam.DataAccess.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Exam.Model.ViewModels.Standard", b =>
+            modelBuilder.Entity("Exam.Model.Standard", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -49,7 +49,7 @@ namespace Exam.DataAccess.Migrations
                     b.ToTable("Standards");
                 });
 
-            modelBuilder.Entity("Exam.Model.ViewModels.Subject", b =>
+            modelBuilder.Entity("Exam.Model.Subject", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -59,6 +59,9 @@ namespace Exam.DataAccess.Migrations
 
                     b.Property<DateTime>("CreatedDateTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("int");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");

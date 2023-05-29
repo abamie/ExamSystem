@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace Exam.Model.ViewModels
+namespace Exam.Model
 {
     public class Answer
     {
@@ -18,11 +18,14 @@ namespace Exam.Model.ViewModels
         public string Name { get; set; }
 
         [Required]
+        public string AnswerNo { get; set; }
+
+        [Required]
         [Display(Name = "Question")]
-        public int SubjectId { get; set; }
-        [ForeignKey("SubjectId")]
+        public int QuestionId { get; set; }
+        [ForeignKey("QuestionId")]
         [ValidateNever]
-        public Subject Subject { get; set; }
+        public Question Question { get; set; }
 
 
         [Required]

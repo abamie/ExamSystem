@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Exam.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class AddStudentsDb : Migration
+    public partial class AddStudentTable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,9 +17,10 @@ namespace Exam.DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    RollNo = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Name = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ClassId = table.Column<int>(type: "int", nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
+                    StandardId = table.Column<int>(type: "int", nullable: false),
                     SubjectId = table.Column<int>(type: "int", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -28,8 +29,8 @@ namespace Exam.DataAccess.Migrations
                 {
                     table.PrimaryKey("PK_Students", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Students_Standards_ClassId",
-                        column: x => x.ClassId,
+                        name: "FK_Students_Standards_StandardId",
+                        column: x => x.StandardId,
                         principalTable: "Standards",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -42,9 +43,9 @@ namespace Exam.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Students_ClassId",
+                name: "IX_Students_StandardId",
                 table: "Students",
-                column: "ClassId");
+                column: "StandardId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Students_SubjectId",
