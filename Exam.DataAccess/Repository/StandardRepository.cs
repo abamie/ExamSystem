@@ -21,7 +21,7 @@ namespace Exam.DataAccess.Repository
 
         public void Update(Standard obj)
         {
-            //_db.Standards.Update(obj);
+            _db.Standards.Update(obj);
         }
     }
 }

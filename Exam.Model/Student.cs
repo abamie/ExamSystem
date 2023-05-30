@@ -16,17 +16,15 @@ namespace Exam.Model
         public int Id { get; set; }
 
 		[Required]
-		[StringLength(50)]
-        [MaxLength(40)]
 		public string RollNo { get; set; }
 		[Required]
 		[DisplayName("Name")]
-		[StringLength(250)]
-        [MaxLength(220)]
 		public string Name { get; set; }
 
-		[StringLength(250)]
-		public string ImageUrl { get; set; }
+        public string Address { get; set; }
+
+        [ValidateNever]
+        public string ImageUrl { get; set; }
 
         [Required]
         [Display(Name = "Class")]
@@ -35,12 +33,6 @@ namespace Exam.Model
         [ValidateNever]
         public Standard Standard { get; set; }
 
-        [Required]
-        [Display(Name = "Subject")]
-        public int SubjectId { get; set; }
-        [ForeignKey("SubjectId")]
-        [ValidateNever]
-        public Subject Subject { get; set; }
         public bool IsActive { get; set; } = true;
 
         public DateTime CreatedDateTime { get; set; } = DateTime.Now;

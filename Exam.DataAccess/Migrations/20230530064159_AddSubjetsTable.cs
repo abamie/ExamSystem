@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Exam.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class AddSubjectTable : Migration
+    public partial class AddSubjetsTable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

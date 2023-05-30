@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Exam.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230529065352_AddStandardTable")]
+    [Migration("20230530064402_AddStandardTable")]
     partial class AddStandardTable
     {
         /// <inheritdoc />

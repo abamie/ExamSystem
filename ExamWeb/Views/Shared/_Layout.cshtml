@@ -29,18 +29,20 @@
 						</li>
 						@*@if (User.IsInRole(SD.Role_Admin))
 						{*@
-							<li class="nav-item dropdown">
-								<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Exam Managment</a>
-								<div class="dropdown-menu">
-									<a class="dropdown-item" asp-area="Admin" asp-controller="Subject" asp-action="Index">Subject</a>
-									<a class="dropdown-item" asp-area="Admin" asp-controller="Standard" asp-action="Index">Class</a>
-									<a class="dropdown-item" asp-area="Admin" asp-controller="Product" asp-action="Index">Product</a>
-									<div class="dropdown-divider"></div>
-									<a class="dropdown-item" asp-area="Admin" asp-controller="Company" asp-action="Index">Company</a>
-									<div class="dropdown-divider"></div>
-									<a class="dropdown-item" asp-area="Identity" asp-page="/Account/Register">Create User</a>
-								</div>
-							</li>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Exam Managment</a>
+							<div class="dropdown-menu">
+								<a class="dropdown-item" asp-area="Admin" asp-controller="Subject" asp-action="Index">Subject</a>
+								<a class="dropdown-item" asp-area="Admin" asp-controller="Standard" asp-action="Index">Class</a>
+								<a class="dropdown-item" asp-area="Admin" asp-controller="Student" asp-action="Index">Student</a>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" asp-area="Admin" asp-controller="Question" asp-action="Index">Question</a>
+								<a class="dropdown-item" asp-area="Admin" asp-controller="Answer" asp-action="Index">Answer</a>
+								<a class="dropdown-item" asp-area="Admin" asp-controller="Choice" asp-action="Index">Choice</a>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" asp-area="Identity" asp-page="/Account/Register">Create User</a>
+							</div>
+						</li>
 						@*}*@
 						<li class="nav-item">
 							<a class=nav-link asp-area="Admin" asp-controller="Order" asp-action="Index">
@@ -50,9 +52,9 @@
 
 
 						@*<li class="nav-item">
-							<a class=nav-link asp-area="Student" asp-controller="Cart" asp-action="Index">
-								@await Component.InvokeAsync("ShoppingCart")
-							</a>
+						<a class=nav-link asp-area="Student" asp-controller="Cart" asp-action="Index">
+						@await Component.InvokeAsync("ShoppingCart")
+						</a>
 						</li>*@
 
 					</ul>
@@ -73,7 +75,7 @@
 		</main>
 	</div>
 
-	<footer class="footer text-muted bg-primary">
+	<footer class="footer text-white bg-primary">
 		<div class="container">
 			&copy; 2023 - Austell Academy
 	</footer>

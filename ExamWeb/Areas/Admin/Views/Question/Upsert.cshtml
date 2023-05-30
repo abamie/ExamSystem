@@ -1,0 +1,54 @@
+﻿@model Exam.Model.ViewModels.QuestionVM
+
+<form method="post" asp-action="Upsert" enctype="multipart/form-data">
+	<input asp-for="Question.Id" hidden />
+
+	<div class="row">
+		<div class="col-10">
+			<div class="border p-3 mt-4 row">
+				<div class="col-12 pb-2">
+					<h2 class="text-primary">@(Model.Question.Id != 0 ? "Update" : "Create")  Question</h2>
+					<hr />
+				</div>
+				@*<div asp-validation-summary="All"></div>*@
+				<div class="mb-3">
+					<label asp-for="Question.DisplayOrder"></label>
+					<input asp-for="Question.DisplayOrder" class="form-control" />
+					<span asp-validation-for="Question.DisplayOrder" class="text-danger"></span>
+				</div>
+				<div class="mb-3 col-6">
+					<label asp-for="Question.QuestionText"></label>
+					<input asp-for="Question.QuestionText" class="form-control" />
+					<span asp-validation-for="Question.QuestionText" class="text-danger"></span>
+				</div>
+				<div class="mb-3 col-6">
+					<label asp-for="Question.Subject"></label>
+					<select asp-for="Question.SubjectId" asp-items="@Model.SubjectList" class="form-select">
+						<option disabled selected>--Select Subject--</option>
+					</select>
+					<span asp-validation-for="Question.SubjectId" class="text-danger"></span>
+				</div>
+				<div class="col-12">
+					@if (Model.Question.Id != 0)
+					{
+						<button type="submit" class="btn btn-primary" style="width:150px">Update</button>
+					}
+					else
+					{
+						<button type="submit" onclick="return ValidateInput()" class="btn btn-primary" style="width:150px">Create</button>
+					}
+					<a asp-controller="Question" asp-action="Index" class="btn btn-secondary" style="width:150px">
+						Back to List
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</form>
+
+@section Scripts{
+	@{
+		<partial name="_ValidationScriptsPartial" />
+	}
+}

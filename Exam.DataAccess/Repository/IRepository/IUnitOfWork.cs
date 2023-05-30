@@ -11,13 +11,20 @@ namespace Exam.DataAccess.Repository.IRepository
 		ISubjectRepository Subject { get; }
 		IStandardRepository Standard { get; }
 
-		//IProductRepository Product { get; }
-		//ICompanyRepository Company { get; }
-		//IShoppingCartRepository ShoppingCart { get; }
-		//IApplicationUserRepository ApplicationUser { get; }
-		//IOrderDetailRepository OrderDetail { get; }
-		//IOrderHeaderRepository OrderHeader { get; }
+		IStudentRepository Student { get; }
 
-		void Save();
+		IQuestionRepository Question { get; }
+
+		IAnswerRepository Answer { get; }
+
+        IChoiceRepository Choice { get; }
+
+        //ICompanyRepository Company { get; }
+        //IShoppingCartRepository ShoppingCart { get; }
+        //IApplicationUserRepository ApplicationUser { get; }
+        //IOrderDetailRepository OrderDetail { get; }
+        //IOrderHeaderRepository OrderHeader { get; }
+
+        void Save();
 	}
 }

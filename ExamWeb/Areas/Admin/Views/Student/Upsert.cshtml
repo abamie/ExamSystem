@@ -1,0 +1,95 @@
+﻿@model Exam.Model.ViewModels.StudentVM
+
+<form method="post" asp-action="Upsert" enctype="multipart/form-data">
+	<input asp-for="Student.Id" hidden />
+	<input asp-for="Student.ImageUrl" hidden />
+
+	<div class="row">
+		<div class="col-10">
+			<div class="border p-3 mt-4 row">
+				<div class="col-12 pb-2">
+					<h2 class="text-primary">@(Model.Student.Id != 0 ? "Update" : "Create")  Student</h2>
+					<hr />
+				</div>
+				@*<div asp-validation-summary="All"></div>*@
+				<div class="mb-3">
+					<label asp-for="Student.RollNo"></label>
+					<input asp-for="Student.RollNo" class="form-control" />
+					<span asp-validation-for="Student.RollNo" class="text-danger"></span>
+				</div>
+				<div class="mb-3 col-6">
+					<label asp-for="Student.Name"></label>
+					<input asp-for="Student.Name" class="form-control" />
+					<span asp-validation-for="Student.Name" class="text-danger"></span>
+				</div>
+				<div class="mb-3">
+					<label asp-for="Student.Address"></label>
+					<textarea asp-for="Student.Address" rows="3" class="form-control"></textarea>
+					<span asp-validation-for="Student.Address" class="text-danger"></span>
+				</div>
+				<div class="mb-3">
+					<label asp-for="Student.ImageUrl"></label>
+					<input type="file" id="uploadBox" name="file" class="form-control" />
+				</div>
+
+				<div class="mb-3 col-6">
+					<label asp-for="Student.StandardId"></label>
+					<select asp-for="Student.StandardId" asp-items="@Model.StandardList" class="form-select">
+						<option disabled selected>--Select Class--</option>
+					</select>
+					<span asp-validation-for="Student.StandardId" class="text-danger"></span>
+				</div>
+				<div class="col-12">
+					@if (Model.Student.Id != 0)
+					{
+						<button type="submit" class="btn btn-primary" style="width:150px">Update</button>
+					}
+					else
+					{
+						<button type="submit" onclick="return ValidateInput()" class="btn btn-primary" style="width:150px">Create</button>
+					}
+					<a asp-controller="Student" asp-action="Index" class="btn btn-secondary" style="width:150px">
+						Back to List
+					</a>
+				</div>
+
+			</div>
+		</div>
+		<div class="col-2 pt-4">
+			<img src="@Model.Student.ImageUrl"
+				 width="100%" style="border-radius:5px; border:1px solid #bbb9b9" />
+		</div>
+	</div>
+
+
+
+
+
+
+
+</form>
+
+@section Scripts{
+	@{
+		<partial name="_ValidationScriptsPartial" />
+	}
+	<script>
+		tinymce.init({
+			selector: 'textarea',
+			plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+			toolbar_mode: 'floating',
+		});
+
+		function ValidateInput() {
+			if (document.getElementById("uploadBox").value == "") {
+				Swal.fire({
+					icon: 'error',
+					title: 'Oops...',
+					text: 'Please upload an Image!',
+				});
+				return false;
+			}
+			return true;
+		}
+	</script>
+}

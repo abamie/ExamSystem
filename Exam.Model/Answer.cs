@@ -12,13 +12,11 @@ namespace Exam.Model
 {
     public class Answer
     {
+        [Key]
         public int Id { get; set; }
 
         [Required]
-        public string Name { get; set; }
-
-        [Required]
-        public string AnswerNo { get; set; }
+        public string AnswerText { get; set; }
 
         [Required]
         [Display(Name = "Question")]
@@ -27,7 +25,6 @@ namespace Exam.Model
         [ValidateNever]
         public Question Question { get; set; }
 
-
         [Required]
         [Display(Name = "Subject")]
         public int SubjectId { get; set; }
@@ -35,12 +32,6 @@ namespace Exam.Model
         [ValidateNever]
         public Subject Subject { get; set; }
 
-        [Required]
-        [Display(Name = "Class")]
-        public int ClassId { get; set; }
-        [ForeignKey("ClassId")]
-        [ValidateNever]
-        public Standard Standard { get; set; }
 
         public bool IsActive { get; set; } = true;
 

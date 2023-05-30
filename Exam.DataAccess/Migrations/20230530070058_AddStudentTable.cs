@@ -17,11 +17,11 @@ namespace Exam.DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RollNo = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
-                    ImageUrl = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
+                    RollNo = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(300)", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(750)", nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(500)", nullable: false),
                     StandardId = table.Column<int>(type: "int", nullable: false),
-                    SubjectId = table.Column<int>(type: "int", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -32,25 +32,13 @@ namespace Exam.DataAccess.Migrations
                         name: "FK_Students_Standards_StandardId",
                         column: x => x.StandardId,
                         principalTable: "Standards",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Students_Subjects_SubjectId",
-                        column: x => x.SubjectId,
-                        principalTable: "Subjects",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Students_StandardId",
                 table: "Students",
                 column: "StandardId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Students_SubjectId",
-                table: "Students",
-                column: "SubjectId");
         }
 
         /// <inheritdoc />
