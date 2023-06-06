@@ -1,4 +1,5 @@
 ﻿using Exam.Model;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Exam.DataAccess.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -24,7 +25,13 @@ namespace Exam.DataAccess.Data
 
         public DbSet<ExamMark> ExamMarks { get; set; }
 
-        //public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<Company> Companies { get; set; }
+
+        public DbSet<StudentSubject> StudentSubjects { get; set; }
+
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+
+        
 
     }
 }

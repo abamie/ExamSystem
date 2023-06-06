@@ -4,7 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ExamWeb.Controllers
 {
-	public class SubjectController : Controller
+    [Area("Admin")]
+    public class SubjectController : Controller
 	{
 		private readonly IUnitOfWork _unitOfWork;
 

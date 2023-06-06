@@ -6,7 +6,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ExamWeb.Areas.Admin.Controllers
 {
-	public class QuestionController : Controller
+    [Area("Admin")]
+    public class QuestionController : Controller
 	{
 		private readonly IUnitOfWork _unitOfWork;
 

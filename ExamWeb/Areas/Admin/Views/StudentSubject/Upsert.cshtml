@@ -1,0 +1,61 @@
+﻿@model Exam.Model.ViewModels.StudentSubjectVM
+
+<form method="post" asp-action="Upsert">
+	<input asp-for="StudentSubject.Id" hidden />
+
+	<div class="row">
+		<div class="col-10">
+			<div class="border p-3 mt-4 row">
+				<div class="col-12 pb-2">
+					<h2 class="text-primary">@(Model.StudentSubject.Id != 0 ? "Update" : "Create")  Choice</h2>
+					<hr />
+				</div>
+				@*<div asp-validation-summary="All"></div>*@
+				<div class="mb-3">
+					<label asp-for="StudentSubject.DisplayOrder"></label>
+					<input asp-for="StudentSubject.DisplayOrder" class="form-control" />
+					<span asp-validation-for="StudentSubject.DisplayOrder" class="text-danger"></span>
+				</div>
+				<div class="mb-3">
+					<label asp-for="StudentSubject.ExamCode"></label>
+					<input asp-for="StudentSubject.ExamCode" class="form-control" />
+					<span asp-validation-for="StudentSubject.ExamCode" class="text-danger"></span>
+				</div>
+				<div class="mb-3 col-6">
+					<label asp-for="StudentSubject.SubjectId"></label>
+					<select asp-for="StudentSubject.SubjectId" asp-items="@Model.SubjectList" class="form-select">
+						<option disabled selected>--Select Subject--</option>
+					</select>
+					<span asp-validation-for="StudentSubject.SubjectId" class="text-danger"></span>
+				</div>
+				<div class="mb-3 col-6">
+					<label asp-for="StudentSubject.StudentId"></label>
+					<select asp-for="StudentSubject.StudentId" asp-items="@Model.StudentList" class="form-select">
+						<option disabled selected>--Select Student--</option>
+					</select>
+					<span asp-validation-for="StudentSubject.StudentId" class="text-danger"></span>
+				</div>
+				<div class="col-12">
+					@if (Model.StudentSubject.Id != 0)
+					{
+						<button type="submit" class="btn btn-primary" style="width:150px">Update</button>
+					}
+					else
+					{
+						<button type="submit" onclick="return ValidateInput()" class="btn btn-primary" style="width:150px">Create</button>
+					}
+					<a asp-controller="StudentSubject" asp-action="Index" class="btn btn-secondary" style="width:150px">
+						Back to List
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</form>
+
+@section Scripts{
+	@{
+		<partial name="_ValidationScriptsPartial" />
+	}
+}

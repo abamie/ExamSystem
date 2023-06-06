@@ -8,8 +8,8 @@ using System.Data;
 
 namespace ExamWeb.Areas.Admin.Controllers
 {
-
-	public class StandardController : Controller
+    [Area("Admin")]
+    public class StandardController : Controller
 	{
 		private readonly IUnitOfWork _unitOfWork;
 

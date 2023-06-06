@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ExamWeb.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class ChoiceController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

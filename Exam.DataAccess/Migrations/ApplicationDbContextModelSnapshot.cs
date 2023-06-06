@@ -87,6 +87,8 @@ namespace Exam.DataAccess.Migrations
                     b.ToTable("Choices");
                 });
 
+           
+
             modelBuilder.Entity("Exam.Model.ExamMark", b =>
                 {
                     b.Property<int>("Id")
@@ -224,6 +226,43 @@ namespace Exam.DataAccess.Migrations
                     b.ToTable("Students");
                 });
 
+            modelBuilder.Entity("Exam.Model.StudentSubject", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ExamCode")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SubjectId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StudentId");
+
+                    b.HasIndex("SubjectId");
+
+                    b.ToTable("StudentSubjects");
+                });
+
             modelBuilder.Entity("Exam.Model.Subject", b =>
                 {
                     b.Property<int>("Id")
@@ -320,6 +359,25 @@ namespace Exam.DataAccess.Migrations
                         .IsRequired();
 
                     b.Navigation("Standard");
+                });
+
+            modelBuilder.Entity("Exam.Model.StudentSubject", b =>
+                {
+                    b.HasOne("Exam.Model.Student", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Exam.Model.Subject", "Subject")
+                        .WithMany()
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Student");
+
+                    b.Navigation("Subject");
                 });
 #pragma warning restore 612, 618
         }

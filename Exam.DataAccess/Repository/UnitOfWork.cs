@@ -22,8 +22,11 @@ namespace Exam.DataAccess.Repository
 			Question= new QuestionRepository(_db);
 			Answer = new AnswerRepository(_db);
             Choice = new ChoiceRepository(_db);
+            ExamMark = new ExamMarkRepository(_db);
+            StudentSubject = new StudentSubjectRepository(_db);
+            Company = new CompanyRepository(_db);
 
-            //Company = new CompanyRepository(_db);
+            //Department = new DepartmentRepository(_db);
             //ApplicationUser = new ApplicationUserRepository(_db);
             //ShoppingCart = new ShoppingCartRepository(_db);
             //OrderHeader = new OrderHeaderRepository(_db);
@@ -39,6 +42,11 @@ namespace Exam.DataAccess.Repository
 		public IAnswerRepository Answer { get; private set; }
 
         public IChoiceRepository Choice { get; private set; }
+
+        public IStudentSubjectRepository StudentSubject { get; private set; }
+
+        public IExamMarkRepository ExamMark { get; private set; }
+        public ICompanytRepository Company { get; private set; }
 
         //public IShoppingCartRepository ShoppingCart { get; private set; }
 

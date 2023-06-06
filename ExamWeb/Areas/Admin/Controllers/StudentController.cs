@@ -9,8 +9,8 @@ using System.Data;
 
 namespace ExamWeb.Areas.Admin.Controllers
 {
-
-	public class StudentController : Controller
+    [Area("Admin")]
+    public class StudentController : Controller
 	{
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IWebHostEnvironment _hostEnvironment;

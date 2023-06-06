@@ -19,7 +19,13 @@ namespace Exam.DataAccess.Repository.IRepository
 
         IChoiceRepository Choice { get; }
 
-        //ICompanyRepository Company { get; }
+        IExamMarkRepository ExamMark { get; }
+
+        IStudentSubjectRepository StudentSubject { get; }
+
+        ICompanytRepository Company { get; }
+
+        //IDepartmentRepository Department { get; }
         //IShoppingCartRepository ShoppingCart { get; }
         //IApplicationUserRepository ApplicationUser { get; }
         //IOrderDetailRepository OrderDetail { get; }
