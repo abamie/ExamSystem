@@ -14,6 +14,8 @@ namespace Exam.Model.ViewModels
 		public string FullName { get; set; }
 		public string ProfilImage { get; set; }
 		public string Standard { get; set;}
+
+		public string Password { get; set; }
 	}
 
 	public class QuizQVM
@@ -32,7 +34,10 @@ namespace Exam.Model.ViewModels
 		public string QuestionType { get; set; }
 		public string Anwser { get; set; }
 		public ICollection<ChoiceQVM> Choices { get; set; }
-	}
+
+        public int selectedvalue { get; set; }
+
+    }
 
 	public class ChoiceQVM
 	{

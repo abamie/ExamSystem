@@ -21,15 +21,15 @@ namespace ExamWeb.ViewComponents
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
             //if (claim != null)
             //{
-            //    if (HttpContext.Session.GetInt32(SD.SessionCart) != null)
+            //    if (HttpContext.Session.GetInt32(SD.SessionStudentId) != null)
             //    {
-            //        return View(HttpContext.Session.GetInt32(SD.SessionCart));
+            //        return View(HttpContext.Session.GetInt32(SD.SessionStudentId));
             //    }
             //    else
             //    {
-            //        HttpContext.Session.SetInt32(SD.SessionCart,
+            //        HttpContext.Session.SetInt32(SD.SessionStudentId,
             //            _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == claim.Value).ToList().Count);
-            //        return View(HttpContext.Session.GetInt32(SD.SessionCart));
+            //        return View(HttpContext.Session.GetInt32(SD.SessionStudentId));
             //    }
             //}
             //else

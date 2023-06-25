@@ -1,0 +1,190 @@
+﻿@model IEnumerable<Exam.Model.ViewModels.PerformanceVM>
+
+@{
+    ViewBag.Title = "Performance";
+}
+
+
+<h2 style="position:center">Student Performance</h2>
+
+<style type="text/css">
+    .Table {
+        display: table;
+        border-color: blue;
+    }
+
+    .Title {
+        display: table-caption;
+        text-align: center;
+        font-weight: bold;
+        font-size: larger;
+    }
+
+    .Heading {
+        display: table-row;
+        font-weight: bold;
+        text-align: center;
+        color: blue;
+        background-color: aqua;
+    }
+
+    .Row {
+        display: table-row;
+    }
+
+    .Cell {
+        display: table-cell;
+        border: solid;
+        border-width: thin;
+        padding-left: 5px;
+        padding-right: 5px;
+        width: 30%;
+    }
+</style>
+
+<div class="Table" style="width:100%">
+    <div class="Title">
+        <p>
+
+        </p>
+    </div>
+    <div class="Heading">
+        <div class="Cell">
+            <p>
+                Subject
+            </p>
+        </div>
+        <div class="Cell">
+            <p>
+                Marks(%)
+            </p>
+        </div>
+        <div class="Cell">
+            <p>
+                Grade
+            </p>
+        </div>
+    </div>
+    @foreach (var item in Model)
+    {
+        <div class="Row">
+            <div class="Cell">
+                <p>
+                    @Html.DisplayFor(modelItem => item.Subject)
+                </p>
+            </div>
+            <div class="Cell">
+                <p>
+                    @Html.DisplayFor(modelItem => item.Marks)
+                </p>
+            </div>
+            <div class="Cell">
+                <p>
+                    @Html.DisplayFor(modelItem => item.Grade)
+                </p>
+            </div>
+        </div>
+    }
+</div>
+<p> </p>
+<div class="Row">
+    <div class="col-md-8" style="padding-top:10%">
+        <div id="pieChart"></div>
+    </div>
+    <div class="col-md-8">
+        <input type="submit" id="btnSubmit" value="Show Bar Chart" />
+
+        <br />
+        <div>
+            <canvas id="myChart" style="max-width:400px;max-height:430px;"></canvas>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var MSiteName = [];
+        var MasterJson;
+        $.ajax({
+            type: "GET",
+            url: "/Chart/PieChart",
+            data: {},
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                successFunc(response);
+            },
+        });
+
+
+        function successFunc(jsondata) {
+            var data = {};
+            var countryNames = [];
+            jsondata.forEach(function (e) {
+                countryNames.push(e.Subject);
+                data[e.Subject] = e.Marks;
+            })
+
+            var chart = c3.generate({
+                bindto: '#pieChart',
+                data: {
+                    json: [data],
+                    keys: {
+                        value: countryNames,
+                    },
+                    type: 'pie'
+                },
+                color: {
+                    pattern: ['#1f77b4', '#aec7e8', '#ff7f0e', '#ffbb78', '#2ca02c', '#98df8a', '#d62728', '#ff9896', '#9467bd', '#c5b0d5', '#8c564b', '#c49c94', '#e377c2', '#f7b6d2', '#7f7f7f', '#c7c7c7', '#bcbd22', '#dbdb8d', '#17becf', '#9edae5']
+                },
+                pie: {
+                    label: {
+                        format: function (value, ratio, id) {
+                            return value;
+                        }
+                    }
+                }
+            });
+        }
+    });
+
+
+    $("#btnSubmit").click(function (e) {
+        //alert("The  was clicked.");
+        $.ajax({
+            type: "GET",
+            url: "/Chart/DisplayChart",
+            data: "",
+            dataType: "json",
+            contentType: 'application/json; charset=utf-8',
+            success: OnSuccessResult,
+            error: OnError
+        });
+        function OnSuccessResult(data) {
+            var _data = data;
+            var _chartLabels = _data[0];
+            var _chartData = _data[1];
+            //alert("ffff");
+
+            var barColor = ["red", "green", "orange", "yellow"];
+            new Chart("myChart",
+                {
+                    type: "bar",
+                    data: {
+                        labels: _chartLabels,
+                        datasets: [{
+                            backgroundColor: barColor,
+                            data: _chartData
+                        }]
+                    }
+                });
+        }
+        function OnError(err) {
+            alert(" error: hh" + err)
+        }
+    });
+</script>
+

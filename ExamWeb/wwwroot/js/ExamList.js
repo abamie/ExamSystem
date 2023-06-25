@@ -19,8 +19,8 @@ function loadDataTable() {
                 "render": function (data) {
                     return `
                         <div class="w-75 btn-group" role="group">
-                        <a href="/student/ExamPaper/Examintaion?id=${data}"
-                        class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i> Examiantion</a>
+                        <a href="/student/QuestionPaper/NextQuestion?id=${data}"
+                        class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i> testExamiantion</a>
 					</div>
                         `
                 },

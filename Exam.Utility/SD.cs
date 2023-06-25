@@ -22,5 +22,7 @@
 		public const string SessionCart = "SessionShoppingCart";
 
 
+        public const string SessionStudentId = "SessionStudentId";
+
     }
 }

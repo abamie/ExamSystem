@@ -45,7 +45,7 @@ namespace ExamWeb.Areas.Student.Controllers
         {
 
 			HttpContext.Session.Remove("studentId");
-           var student = _unitOfWork.Student.GetFirstOrDefault(u => u.Name == user.FullName, includeProperties: "Standard");
+           var student = _unitOfWork.Student.GetFirstOrDefault(u => u.UserId == user.FullName && u.Password==user.Password, includeProperties: "Standard");
 
             if (student != null)
             {
@@ -101,6 +101,8 @@ namespace ExamWeb.Areas.Student.Controllers
 			} ).ToList();
 
 
+            HttpContext.Session.SetInt32("subjectId", id.Value);
+
             foreach (QuestionQVM item in QuestionList)
             {
                 item.Choices = _unitOfWork.Choice.GetAll(a => a.QuestionId == item.QuestionID).Select(q => new ChoiceQVM
@@ -113,6 +115,7 @@ namespace ExamWeb.Areas.Student.Controllers
 
             return View(finalList.AsQueryable());
 		}
+
 
 		[HttpPost]
 	//	[ValidateAntiForgeryToken]
@@ -136,25 +139,33 @@ namespace ExamWeb.Areas.Student.Controllers
 			resultQuiz = finalResultQuiz;
             //  int correctanswer = finalResultQuiz.Where(a => a.isCorrect == true).Select(a => a.isCorrect).Count();
 
-            //	SaveResult(finalResultQuiz);
+            SaveResult(finalResultQuiz);
 
             JsonResult jsr =  Json(finalResultQuiz, new Newtonsoft.Json.JsonSerializerSettings());
 
-          //  return Json(resultQuiz, new Newtonsoft.Json.JsonSerializerSettings());
+              return Json(resultQuiz, new Newtonsoft.Json.JsonSerializerSettings());
 
-            return Json(new { data = resultQuiz });
+            //return RedirectToAction("Index", "Performance", new { area = "student" });
+
+
+           //return Json(new { data = resultQuiz });
 
             //return Json(new { result = finalResultQuiz }, JsonRequestBehavior.AllowGet);
         }
-        private void SaveResult(List<QuizAnswersQVM> finalResultQuiz)
+
+		private void SaveResult(List<QuizAnswersQVM> finalResultQuiz)
         {
-          //  UserVM usr = Session["UserConnected"] as UserVM;
+            int? studentId = HttpContext.Session.GetInt32("studentId");
+
+            int? subjectid = HttpContext.Session.GetInt32("subjectId");
+
+            //  UserVM usr = Session["UserConnected"] as UserVM;
             int correctanswer = finalResultQuiz.Where(a => a.isCorrect == true).Select(a => a.isCorrect).Count();
             int totalquestion = finalResultQuiz.Count();
             int marks = ((correctanswer * 100) / totalquestion);
             int questionid = finalResultQuiz.Select(a => a.QuestionID).FirstOrDefault();
 
-			ExamMark TestResult = _unitOfWork.ExamMark.GetFirstOrDefault(u => u.StudentId == 1 && u.SubjectId == 1);
+			ExamMark TestResult = _unitOfWork.ExamMark.GetFirstOrDefault(u => u.StudentId == studentId && u.SubjectId == subjectid);
 
             if (TestResult != null)
                 _unitOfWork.ExamMark.Remove(TestResult);
@@ -162,19 +173,35 @@ namespace ExamWeb.Areas.Student.Controllers
             ExamMark tr = new ExamMark();
             tr.CreatedDateTime = DateTime.Now;
             tr.Marks = marks;
-            tr.SubjectId = tr.SubjectId;
-            tr.StudentId = tr.StudentId;
+            tr.SubjectId = studentId.Value;
+            tr.StudentId = studentId.Value;
+
+            tr.Comment = "Fail";
 
             if (marks > 90)
-                tr.Grade = "A+";
-            else if (marks > 70)
-                tr.Grade = "A";
-            else if (marks > 50)
-                tr.Grade = "B";
-            else if (marks > 30)
-                tr.Grade = "C";
-            else
-                tr.Grade = "F";
+			{
+				tr.Grade = "A+";
+				tr.Comment = "OutStanding";
+			}
+			else if (marks > 70)
+			{
+				tr.Grade = "A";
+				tr.Comment = "Excellent";
+			}
+			else if (marks > 50)
+			{
+				tr.Grade = "B";
+				tr.Comment = "Very Good";
+			}
+			else if (marks > 30)
+			{
+				tr.Grade = "C";
+                tr.Comment = "Good";
+            }
+			else
+				tr.Grade = "F";
+
+			
 
             _unitOfWork.ExamMark.Add(tr);
             _unitOfWork.Save();

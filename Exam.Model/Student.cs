@@ -21,7 +21,13 @@ namespace Exam.Model
 		[DisplayName("Name")]
 		public string Name { get; set; }
 
-        public string Address { get; set; }
+		[DisplayName("UserId")]
+		public string UserId { get; set; }
+
+		[DisplayName("Password")]
+		public string Password { get; set; }
+
+		public string Address { get; set; }
 
         [ValidateNever]
         public string ImageUrl { get; set; }
