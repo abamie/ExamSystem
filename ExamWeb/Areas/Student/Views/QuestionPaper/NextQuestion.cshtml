@@ -1,8 +1,6 @@
 ﻿@model Exam.Model.ViewModels.QuestionQVM
 
 @{
-	int count = 1;
-
 	ViewBag.Title = @ViewBag.score;
 }
 
@@ -108,32 +106,32 @@
 			<dl class="dl-horizontal">
 
 
-				<dt>
-					@ViewBag.questionNo
-				</dt>
-
 				<dd>
-					@Html.DisplayFor(model => model.QuestionText)
+					<h4>Question &nbsp @Html.DisplayFor(model => model.QuestionDispalyOrder) :	@Html.DisplayFor(model => model.QuestionText)</h4>
+					<hr />
 				</dd>
+				
 				@foreach (var choice in Model.Choices)
 				{
-					<dt>
-						@Html.RadioButtonFor(model => model.selectedvalue, choice.ChoiceID)
-					</dt>
+
 					<dd>
+						<h4></h4>
+						<p>
+						@Html.DisplayFor(model => choice.DisplayOrder) : @Html.RadioButtonFor(model => model.selectedvalue, choice.DisplayOrder)
+
 						@Html.DisplayFor(model => choice.ChoiceText)
+						</p>
 					</dd>
-					count++;
 					@Html.HiddenFor(m => choice.ChoiceID)
 				}
 
 				@Html.HiddenFor(m => m.Anwser)
-
+				@Html.HiddenFor(m => m.AnwserId)
 				@Html.HiddenFor(m => m.QuestionID)
-
 				@Html.HiddenFor(m => m.SubjectID)
-
 				@Html.HiddenFor(m => m.QuestionText)
+				@Html.HiddenFor(m => m.QuestionDispalyOrder)
+
 
 
 			</dl>

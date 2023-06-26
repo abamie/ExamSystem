@@ -7,7 +7,7 @@ $(document).ready(function () {
 function loadDataTable() {
     dataTable = $('#tblData').DataTable({
         "ajax": {
-            "url": "/student/ExamPaper/GetStudentExamById"
+            "url": "/student/QuestionPaper/GetStudentExamById"
         },
         "columns": [
             { "data": "displayOrder", "width": "25%" },

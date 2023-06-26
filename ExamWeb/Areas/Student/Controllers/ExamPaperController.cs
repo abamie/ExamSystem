@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
+using System.Security.Cryptography;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ExamWeb.Areas.Student.Controllers
@@ -41,11 +42,12 @@ namespace ExamWeb.Areas.Student.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetUser(UserQVM user)
+        public ActionResult GetUser(StudentVM user)
         {
 
 			HttpContext.Session.Remove("studentId");
-           var student = _unitOfWork.Student.GetFirstOrDefault(u => u.UserId == user.FullName && u.Password==user.Password, includeProperties: "Standard");
+			HttpContext.Session.SetInt32("correctAns", 0);
+			var student = _unitOfWork.Student.GetFirstOrDefault(u => u.UserId == user.Student.UserId && u.Password==user.Student.Password, includeProperties: "Standard");
 
             if (student != null)
             {
