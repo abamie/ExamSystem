@@ -24,6 +24,12 @@ namespace Exam.Model
         [StringLength(200)]
         public string ExamCode { get; set; }
 
+        public int TotalQuestion { get; set; }
+
+        public bool IsActive { get; set; } = true;
+
+        public DateTime CreatedDateTime { get; set; } = DateTime.Now;
+
         [Required]
         [Display(Name = "Student")]
         public int StudentId { get; set; }
@@ -38,8 +44,10 @@ namespace Exam.Model
         [ValidateNever]
         public Subject Subject { get; set; }
 
-        public bool IsActive { get; set; } = true;
+		
 
-        public DateTime CreatedDateTime { get; set; } = DateTime.Now;
+		
+
+       
     }
 }

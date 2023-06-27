@@ -21,6 +21,11 @@
 					<input asp-for="StudentSubject.ExamCode" class="form-control" />
 					<span asp-validation-for="StudentSubject.ExamCode" class="text-danger"></span>
 				</div>
+				<div class="mb-3">
+					<label asp-for="StudentSubject.TotalQuestion"></label>
+					<input asp-for="StudentSubject.TotalQuestion" class="form-control" />
+					<span asp-validation-for="StudentSubject.TotalQuestion" class="text-danger"></span>
+				</div>
 				<div class="mb-3 col-6">
 					<label asp-for="StudentSubject.SubjectId"></label>
 					<select asp-for="StudentSubject.SubjectId" asp-items="@Model.SubjectList" class="form-select">

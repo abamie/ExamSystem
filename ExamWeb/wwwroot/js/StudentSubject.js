@@ -10,10 +10,10 @@ function loadDataTable() {
             "url": "/Admin/StudentSubject/GetAll"
         },
         "columns": [
-            { "data": "displayOrder", "width": "25%" },
-            { "data": "examCode", "width": "25%" },
-            { "data": "student.name", "width": "25%" },
-            { "data": "subject.name", "width": "25%" },
+            { "data": "displayOrder", "width": "20%" },
+            { "data": "examCode", "width": "20%" },
+            { "data": "student.name", "width": "20%" },
+            { "data": "subject.name", "width": "20%" },
             {
                 "data": "id",
                 "render": function (data) {

@@ -26,7 +26,8 @@ namespace Exam.DataAccess.Repository
             {
                 objFromDb.DisplayOrder = obj.DisplayOrder;
                 objFromDb.ExamCode = obj.ExamCode;
-                objFromDb.StudentId = obj.StudentId;
+				objFromDb.TotalQuestion = obj.TotalQuestion;
+				objFromDb.StudentId = obj.StudentId;
                 objFromDb.Student = obj.Student;
                 objFromDb.SubjectId = obj.SubjectId;
                 objFromDb.Subject = obj.Subject;

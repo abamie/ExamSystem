@@ -37,12 +37,20 @@ namespace ExamWeb.Areas.Student.Controllers
 			return View();
 		}
 
+		private void ResetExamSession()
+		{
+			HttpContext.Session.Remove("studentId");
+			HttpContext.Session.SetInt32("correctAns", 0);
+			HttpContext.Session.Remove("studentId");
+			HttpContext.Session.SetInt32("totalQuestion", 0);
+		}
+
 		[HttpPost]
 		public ActionResult GetUser(StudentVM user)
 		{
 
-			HttpContext.Session.Remove("studentId");
-			HttpContext.Session.SetInt32("correctAns", 0);
+			ResetExamSession();
+
 			var student = _unitOfWork.Student.GetFirstOrDefault(u => u.UserId == user.Student.UserId && u.Password == user.Student.Password, includeProperties: "Standard");
 
 			if (student != null)
@@ -118,6 +126,23 @@ namespace ExamWeb.Areas.Student.Controllers
 			_unitOfWork.ExamMark.Add(tr);
 			_unitOfWork.Save();
 		}
+
+		private StudentSubject GetStudentSubjectById(int id)
+		{
+			StudentSubject studentSubject= null;
+
+            studentSubject = _unitOfWork.StudentSubject.GetFirstOrDefault(q => q.Id == id && q.IsActive == true, includeProperties: "Student,Subject");
+			if(studentSubject !=null)
+			{
+                HttpContext.Session.SetInt32("subjectId", studentSubject.SubjectId);
+                HttpContext.Session.SetInt32("studentId", studentSubject.StudentId);
+                HttpContext.Session.SetInt32("totalQuestion", studentSubject.TotalQuestion);
+            }
+
+            return studentSubject;
+
+		}
+
 		private QuestionQVM GetQuestion(int DispayOrder)
 		{
 			List<QuestionQVM> QuestionList = new List<QuestionQVM>();
@@ -127,18 +152,17 @@ namespace ExamWeb.Areas.Student.Controllers
 
 			int? subjectId = HttpContext.Session.GetInt32("subjectId");
 
-			QuestionList = _unitOfWork.Answer.GetAll(q => q.SubjectId == subjectId && q.Question.DisplayOrder == DispayOrder, includeProperties: "Question,Subject").Select(q => new QuestionQVM
+            int? totalQuestion = HttpContext.Session.GetInt32("totalQuestion");
+
+            QuestionList = _unitOfWork.Answer.GetAll(q => q.SubjectId == subjectId && q.Question.DisplayOrder == DispayOrder, includeProperties: "Question,Subject").Select(q => new QuestionQVM
 			{
 				QuestionID = q.Id,
 				QuestionText = q.Question.QuestionText,
 				SubjectID = q.SubjectId,
 				AnwserId = q.Id,
-				QuestionDispalyOrder = q.Question.DisplayOrder
-				
-			}).ToList();
+				QuestionDispalyOrder = q.Question.DisplayOrder,
 
-
-
+            }).ToList();
 
 			foreach (QuestionQVM item in QuestionList)
 			{
@@ -151,19 +175,24 @@ namespace ExamWeb.Areas.Student.Controllers
 				finalList.Add(item);
 			}
 
-			return finalList.FirstOrDefault();
+			QuestionQVM? result = finalList.FirstOrDefault();
+			result.TotalQuestion = totalQuestion.Value;
+
+            return result;
 		}
 
 		public ActionResult NextQuestion(int? id)
 		{
 			if (id != null)
 			{
-				HttpContext.Session.SetInt32("subjectId", id.Value);
-				TempData["a"] = 1;
+				//HttpContext.Session.SetInt32("subjectId", id.Value);
+				//            HttpContext.Session.SetInt32("examId", id.Value);
+				StudentSubject ss = GetStudentSubjectById(id.Value);
+                TempData["a"] = 1;
+				ViewBag.questionNo = 1;
 			}
 
 			int qNo = (int)TempData["a"];
-			//ViewBag.questionNo = qNo;
 
 			QuestionQVM qust = GetQuestion(qNo);
 
@@ -177,7 +206,7 @@ namespace ExamWeb.Areas.Student.Controllers
 		[HttpPost]
 		public ActionResult NextQuestion(QuestionQVM aaa)
 		{
-			int anscnt = 0;
+			int anscnt = 0,totlQuestion=0;
 			//var questanswer = JsonSerializer.Deserialize<QuestionQVM>(TempData["qData"] as string);
 
 			if (aaa.AnwserId == aaa.selectedvalue)
@@ -185,8 +214,10 @@ namespace ExamWeb.Areas.Student.Controllers
 				anscnt = Convert.ToInt32(HttpContext.Session.GetInt32("correctAns")) + 1;
 				HttpContext.Session.SetInt32("correctAns", anscnt);
 			}
-			
-			if (aaa.QuestionDispalyOrder == 3)
+
+           // totlQuestion = Convert.ToInt32(HttpContext.Session.GetInt32("totalQuestion"));
+
+            if (aaa.QuestionDispalyOrder == aaa.TotalQuestion)
 			{
 				SaveResult(anscnt, aaa.QuestionDispalyOrder);
 				return RedirectToAction("Index", "Performance");
@@ -194,7 +225,7 @@ namespace ExamWeb.Areas.Student.Controllers
 
 			}
 			//int qId = (int)aaa.QuestionDispalyOrder + 1;
-			//ViewBag.questionNo = qId;
+			//ViewBag.questionNo = aaa.QuestionDispalyOrder + 1;
 			TempData["a"] = aaa.QuestionDispalyOrder + 1;
 
 			return RedirectToAction("NextQuestion");

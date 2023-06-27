@@ -35,7 +35,9 @@ namespace Exam.Model.ViewModels
 		public string QuestionType { get; set; }
 		public string Anwser { get; set; }
 		public int AnwserId { get; set; }
-		public ICollection<ChoiceQVM> Choices { get; set; }
+
+        public int TotalQuestion { get; set; }
+        public ICollection<ChoiceQVM> Choices { get; set; }
 
 		public int QuestionDispalyOrder { get; set; }
 		[Required]
