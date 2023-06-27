@@ -19,8 +19,11 @@ namespace ExamWeb.Area.Admin.Controllers
             _logger = logger;
             _unitOfWork = unitOfWork;
         }
-
-        public IActionResult Index()
+		public IActionResult AboutUs()
+		{
+			return View();
+		}
+		public IActionResult Index()
         {
             //IEnumerable<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "Category,CoverType");
 
