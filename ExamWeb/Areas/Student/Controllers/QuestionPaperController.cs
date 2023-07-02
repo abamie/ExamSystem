@@ -3,6 +3,7 @@ using Exam.Model;
 using Exam.Model.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Runtime.Intrinsics.Arm;
 using System.Text.Json;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
@@ -143,7 +144,47 @@ namespace ExamWeb.Areas.Student.Controllers
 
 		}
 
-		private QuestionQVM GetQuestion(int DispayOrder)
+		private QuestionQVM GetQuestionNew(int DispayOrder, int err = 0)
+		{
+			ExamSheetVM QuestionList = new ExamSheetVM();
+			List<QuestionQVM> finalList = new List<QuestionQVM>();
+
+			List<QuestionQVM> QuestionAnswerList = new List<QuestionQVM>();
+
+			int? subjectId = HttpContext.Session.GetInt32("subjectId");
+
+			int? totalQuestion = HttpContext.Session.GetInt32("totalQuestion");
+
+			QuestionList.answer = _unitOfWork.Answer.GetFirstOrDefault(q => q.SubjectId == subjectId && q.Question.DisplayOrder == DispayOrder, includeProperties: "Question,Subject");
+
+			int QuestionId = QuestionList.answer.QuestionId;
+
+			 var Choices = _unitOfWork.Choice.GetAll(a => a.Id == QuestionId, includeProperties: "Question").ToList();
+
+		//	QuestionList.Choices = Choices.AsEnumerable<Choice>();
+
+			//foreach (QuestionQVM item in QuestionList)
+			//{
+			//	item.Choices = _unitOfWork.Choice.GetAll(a => a.QuestionId == item.QuestionID).Select(q => new ChoiceQVM
+			//	{
+			//		ChoiceID = q.Id,
+			//		ChoiceText = q.ChoiceText,
+			//		DisplayOrder = q.DispalyOrder
+			//	}).ToList();
+			//	finalList.Add(item);
+			//}
+
+			QuestionQVM? result = finalList.FirstOrDefault();
+			if (err == 1)
+			{
+				result.Message = "Please select an answer";
+			}
+			result.TotalQuestion = totalQuestion.Value;
+
+			return result;
+		}
+
+		private QuestionQVM GetQuestion(int DispayOrder, int err=0)
 		{
 			List<QuestionQVM> QuestionList = new List<QuestionQVM>();
 			List<QuestionQVM> finalList = new List<QuestionQVM>();
@@ -161,6 +202,7 @@ namespace ExamWeb.Areas.Student.Controllers
 				SubjectID = q.SubjectId,
 				AnwserId = q.Id,
 				QuestionDispalyOrder = q.Question.DisplayOrder,
+				Anwser=q.AnswerText
 
             }).ToList();
 
@@ -176,6 +218,10 @@ namespace ExamWeb.Areas.Student.Controllers
 			}
 
 			QuestionQVM? result = finalList.FirstOrDefault();
+			if(err==1)
+			{
+				result.Message = "Please select an answer";
+			}
 			result.TotalQuestion = totalQuestion.Value;
 
             return result;
@@ -183,18 +229,18 @@ namespace ExamWeb.Areas.Student.Controllers
 
 		public ActionResult NextQuestion(int? id)
 		{
+			int qNo = 0, err = 0;
+
 			if (id != null)
 			{
-				//HttpContext.Session.SetInt32("subjectId", id.Value);
-				//            HttpContext.Session.SetInt32("examId", id.Value);
 				StudentSubject ss = GetStudentSubjectById(id.Value);
                 TempData["a"] = 1;
-				ViewBag.questionNo = 1;
+				//ViewBag.questionNo = 1;
 			}
 
-			int qNo = (int)TempData["a"];
+			qNo = (int)TempData["a"];
 
-			QuestionQVM qust = GetQuestion(qNo);
+			QuestionQVM qust = GetQuestion(qNo,err);
 
 			//TempData["qData"] = JsonSerializer.Serialize(qust); ;
 
@@ -206,7 +252,10 @@ namespace ExamWeb.Areas.Student.Controllers
 		[HttpPost]
 		public ActionResult NextQuestion(QuestionQVM aaa)
 		{
-			int anscnt = 0,totlQuestion=0;
+			int anscnt = 0;
+
+			//TempData["err"] = 0;
+
 			//var questanswer = JsonSerializer.Deserialize<QuestionQVM>(TempData["qData"] as string);
 
 			if (aaa.AnwserId == aaa.selectedvalue)
@@ -214,8 +263,6 @@ namespace ExamWeb.Areas.Student.Controllers
 				anscnt = Convert.ToInt32(HttpContext.Session.GetInt32("correctAns")) + 1;
 				HttpContext.Session.SetInt32("correctAns", anscnt);
 			}
-
-           // totlQuestion = Convert.ToInt32(HttpContext.Session.GetInt32("totalQuestion"));
 
             if (aaa.QuestionDispalyOrder == aaa.TotalQuestion)
 			{
@@ -227,6 +274,11 @@ namespace ExamWeb.Areas.Student.Controllers
 			//int qId = (int)aaa.QuestionDispalyOrder + 1;
 			//ViewBag.questionNo = aaa.QuestionDispalyOrder + 1;
 			TempData["a"] = aaa.QuestionDispalyOrder + 1;
+			//if (aaa.selectedvalue <1)
+			//{
+			//	TempData["a"] = aaa.QuestionDispalyOrder;
+			//	TempData["err"] = 1;
+			//}
 
 			return RedirectToAction("NextQuestion");
 

@@ -44,10 +44,6 @@ namespace Exam.Model
         [ValidateNever]
         public Subject Subject { get; set; }
 
-		
-
-		
-
        
     }
 }

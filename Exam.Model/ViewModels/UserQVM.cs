@@ -8,26 +8,9 @@ using System.Threading.Tasks;
 
 namespace Exam.Model.ViewModels
 {
-	//public class UserQVM
-	//{
 
-	//	public string StudentID { get; set; }
-	//	public string StudentName { get; set; }
-	//	public string ProfilImage { get; set; }
-	//	public string Standard { get; set;}
 
-	//	public string Password { get; set; }
-	//}
-
-	//public class QuizQVM
-	//{
-	//	public int QuizID { get; set; }
-	//	public string QuizName { get; set; }
-	//	public List<SelectListItem> ListOfQuizz { get; set; }
-
-	//}
-
-	public class QuestionQVM
+	public class QuestionQVM  
 	{
 		public int QuestionID { get; set; }
 		public int SubjectID { get; set; }
@@ -36,14 +19,18 @@ namespace Exam.Model.ViewModels
 		public string Anwser { get; set; }
 		public int AnwserId { get; set; }
 
-        public int TotalQuestion { get; set; }
-        public ICollection<ChoiceQVM> Choices { get; set; }
+		public int TotalQuestion { get; set; }
+		public ICollection<ChoiceQVM> Choices { get; set; }
 
 		public int QuestionDispalyOrder { get; set; }
-		[Required]
+
+		[Display(Name = "Selection")]
+		[Range(1,9, ErrorMessage = "Please select an answer")]
 		public int selectedvalue { get; set; }
 
-    }
+		public string Message { get; set; }
+
+	}
 
 	public class ChoiceQVM
 	{

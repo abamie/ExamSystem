@@ -8,11 +8,8 @@ namespace Exam.Model.ViewModels
 {
     public class ExamSheetVM
     {
-        public int QuestionID { get; set; }
-        public string QuestionText { get; set; }
-        public string QuestionType { get; set; }
-        public string Anwser { get; set; }
-        public string AnwserId { get; set; }
-        public ICollection<ChoiceVM> Choices { get; set; }
+        public Answer answer { get; set; }
+		public StudentSubject studentsubject { get; set; }
+        public List<ChoiceVM> Choices { get; set; } = new List<ChoiceVM>();
     }
 }

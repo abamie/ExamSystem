@@ -94,56 +94,56 @@
 	timer = setInterval(showRemaining, 1000);
 </script>
 <div>
-	@using (Html.BeginForm("NextQuestion", "QuestionPaper", FormMethod.Post))
-	{
+
+	<form method="post" asp-action="NextQuestion" enctype="multipart/form-data">
+		<input asp-for="Anwser" hidden />
+		<input asp-for="AnwserId" hidden />
+		<input asp-for="QuestionID" hidden />
+		<input asp-for="SubjectID" hidden />
+		<input asp-for="QuestionText" hidden />
+		<input asp-for="QuestionDispalyOrder" hidden />
+		<input asp-for="TotalQuestion" hidden />
 		@Html.AntiForgeryToken()
 		<div>
-			@Html.ValidationMessageFor(m => m.selectedvalue, "", new { @class = "text-danger" })
 			<h4> </h4>
+
 			<hr />
-
-
 			<dl class="dl-horizontal">
-
-
 				<dd>
-					<h4>Question &nbsp @Html.DisplayFor(model => model.QuestionDispalyOrder) :	@Html.DisplayFor(model => model.QuestionText)</h4>
+					<h4 class="text-primary"> @Html.DisplayFor(model => model.QuestionText) </h4>
 					<hr />
 				</dd>
-				
+				<dd>
+					<span class="text-danger"><div asp-validation-summary="All"></div></span>
+				</dd>
 				@foreach (var choice in Model.Choices)
 				{
-
 					<dd>
 						<h4></h4>
-						<p>
-						@Html.DisplayFor(model => choice.DisplayOrder) : @Html.RadioButtonFor(model => model.selectedvalue, choice.DisplayOrder)
+						<h5 class="text-primary">
+							@Html.RadioButtonFor(model => model.selectedvalue, choice.DisplayOrder)
+							@Html.DisplayFor(model => choice.ChoiceText)
 
-						@Html.DisplayFor(model => choice.ChoiceText)
-						</p>
+						</h5>
 					</dd>
 					@Html.HiddenFor(m => choice.ChoiceID)
 				}
-
-				@Html.HiddenFor(m => m.Anwser)
-				@Html.HiddenFor(m => m.AnwserId)
-				@Html.HiddenFor(m => m.QuestionID)
-				@Html.HiddenFor(m => m.SubjectID)
-				@Html.HiddenFor(m => m.QuestionText)
-				@Html.HiddenFor(m => m.QuestionDispalyOrder)
-				@Html.HiddenFor(m => m.TotalQuestion)
-
-
 
 			</dl>
 		</div>
 
 		<div class="form-group">
-			<div class="col-md-offset-2 col-md-10">
+			<div class="col-md-offset-2 col-md-10 col-lg-10">
 				<input type="submit" value="NEXT" class="btn btn-danger" /> <span class="text-bg-info"> ( @Html.DisplayFor(model => model.QuestionDispalyOrder) of @Html.DisplayFor(model => model.TotalQuestion) )</span>
 			</div>
 		</div>
-
-
+	</form>
+	@section Scripts{
+		@{
+			<partial name="_ValidationScriptsPartial" />
+		}
 	}
+
 </div>
+
+
