@@ -7,6 +7,82 @@ a.navbar-brand {
     word-break: break-all;
 }
 
+.car {
+    width: 100%;
+    height: 500px;
+    background-size: cover;
+    background-position: center center;
+}
+.course {
+    width: 80%;
+    margin: auto;
+    text-align: center;
+    padding-top: 100px;
+}
+
+h1 {
+    font-size: 36px;
+    font-weight: 600;
+}
+
+p12 {
+    color: yellowgreen;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 22px;
+    padding: 10px;
+}
+
+p29 {
+    color: #009933;
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 22px;
+    padding: 10px;
+    font-family: 'Patua One', cursive;
+}
+
+
+.row {
+    margin-top: 7%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.course-col {
+    flex-basis: 31%;
+    background: #fff3f3;
+    border-radius: 10px;
+    margin-bottom: 5%;
+    padding: 20px 12px;
+    box-sizing: border-box;
+}
+
+h3 {
+    text-align: center;
+    font-weight: 600;
+    margin: 10px 0;
+}
+
+.course-col:hover {
+    box-shadow: 0 0 20px 0px rgba(0,0,0,0.2);
+}
+
+@media(max-width: 700px) {
+    .row {
+        flex-direction: column;
+    }
+}
+
+.course-col1 {
+    flex-basis: 31%;
+    background: #fff3f3;
+    border-radius: 10px;
+    margin-bottom: 5%;
+    padding: 20px 12px;
+    box-sizing: border-box;
+}
+
 
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
