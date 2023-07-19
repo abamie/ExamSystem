@@ -74,7 +74,10 @@
 		var now = new Date();
 		var distance = end - now;
 		if (distance < 0) {
-
+			window.setTimeout(function () {
+				alert("Time Over");
+				window.location.href = '@Url.Action("TimeoutExam", "QuestionPaper")';
+			}, 1000);
 			clearInterval(timer);
 			document.getElementById('countdown').innerHTML = 'EXPIRED!';
 

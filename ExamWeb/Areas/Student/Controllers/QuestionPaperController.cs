@@ -69,6 +69,11 @@ namespace ExamWeb.Areas.Student.Controllers
 
 		}
 
+		public IActionResult TimeoutExam()
+		{
+				return View();
+		}
+
 		public IActionResult GetStudentExamById()
 		{
 			int? studentId = HttpContext.Session.GetInt32("studentId");
