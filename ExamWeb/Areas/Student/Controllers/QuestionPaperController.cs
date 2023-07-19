@@ -202,7 +202,7 @@ namespace ExamWeb.Areas.Student.Controllers
 
             QuestionList = _unitOfWork.Answer.GetAll(q => q.SubjectId == subjectId && q.Question.DisplayOrder == DispayOrder, includeProperties: "Question,Subject").Select(q => new QuestionQVM
 			{
-				QuestionID = q.Id,
+				QuestionID = q.QuestionId,
 				QuestionText = q.Question.QuestionText,
 				SubjectID = q.SubjectId,
 				AnwserId = q.Id,
@@ -262,11 +262,17 @@ namespace ExamWeb.Areas.Student.Controllers
 			//TempData["err"] = 0;
 
 			//var questanswer = JsonSerializer.Deserialize<QuestionQVM>(TempData["qData"] as string);
+			anscnt = Convert.ToInt32(HttpContext.Session.GetInt32("correctAns"));
 
-			if (aaa.AnwserId == aaa.selectedvalue)
+			if (aaa.selectedvalue > 0)
 			{
-				anscnt = Convert.ToInt32(HttpContext.Session.GetInt32("correctAns")) + 1;
-				HttpContext.Session.SetInt32("correctAns", anscnt);
+				Choice ansVM = _unitOfWork.Choice.GetFirstOrDefault(u => u.Id == aaa.selectedvalue);
+
+				if (aaa.Anwser.Equals(ansVM.ChoiceText))
+				{
+					anscnt = anscnt + 1;
+					HttpContext.Session.SetInt32("correctAns", anscnt);
+				}
 			}
 
             if (aaa.QuestionDispalyOrder == aaa.TotalQuestion)

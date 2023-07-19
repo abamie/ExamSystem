@@ -15,7 +15,7 @@ function loadDataTable() {
             { "data": "student.name", "width": "25%" },
             { "data": "subject.name", "width": "25%" },
             {
-                "data": "subject.id",
+                "data": "id",
                 "render": function (data) {
                     return `
                         <div class="w-75 btn-group" role="group">

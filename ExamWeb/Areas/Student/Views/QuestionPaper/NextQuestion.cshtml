@@ -75,7 +75,7 @@
 		var distance = end - now;
 		if (distance < 0) {
 			window.setTimeout(function () {
-				alert("Time Over");
+				//alert("Time Over");
 				window.location.href = '@Url.Action("TimeoutExam", "QuestionPaper")';
 			}, 1000);
 			clearInterval(timer);
@@ -113,7 +113,7 @@
 			<hr />
 			<dl class="dl-horizontal">
 				<dd>
-					<h4 class="text-primary"> @Html.DisplayFor(model => model.QuestionText) </h4>
+					<h4 class="text-primary"> Q. @Html.DisplayFor(model => model.QuestionText) </h4>
 					<hr />
 				</dd>
 				<dd>
@@ -123,8 +123,8 @@
 				{
 					<dd>
 						<h4></h4>
-						<h5 class="text-primary">
-							@Html.RadioButtonFor(model => model.selectedvalue, choice.DisplayOrder)
+						<h5 class="text-primary1">
+							@Html.RadioButtonFor(model => model.selectedvalue, choice.ChoiceID)&nbsp;&nbsp;&nbsp;&nbsp;
 							@Html.DisplayFor(model => choice.ChoiceText)
 
 						</h5>

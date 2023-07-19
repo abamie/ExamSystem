@@ -25,7 +25,7 @@ namespace Exam.Model.ViewModels
 		public int QuestionDispalyOrder { get; set; }
 
 		[Display(Name = "Selection")]
-		[Range(1,9, ErrorMessage = "Please select an answer")]
+		[Range(1,9999, ErrorMessage = "Please select an answer")]
 		public int selectedvalue { get; set; }
 
 		public string Message { get; set; }

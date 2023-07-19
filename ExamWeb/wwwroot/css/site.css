@@ -13,6 +13,7 @@ a.navbar-brand {
     background-size: cover;
     background-position: center center;
 }
+
 .course {
     width: 80%;
     margin: auto;
@@ -134,3 +135,16 @@ body {
     white-space: nowrap;
     line-height: 60px;
 }
+
+.text-primary1 {
+    display: flex;
+    margin-top: 10px;
+    padding: 10px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 1px solid #ddd;
+}
+
+    .text-primary1:hover {
+        background: #f7fbff;
+    }
