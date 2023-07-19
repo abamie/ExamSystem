@@ -20,7 +20,7 @@ function loadDataTable() {
                     return `
                         <div class="w-75 btn-group" role="group">
                         <a href="/student/QuestionPaper/NextQuestion?id=${data}"
-                        class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i> testExamiantion</a>
+                        class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i> Examiantion</a>
 					</div>
                         `
                 },
