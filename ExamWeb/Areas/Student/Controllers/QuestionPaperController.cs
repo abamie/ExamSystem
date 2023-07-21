@@ -42,7 +42,7 @@ namespace ExamWeb.Areas.Student.Controllers
 		{
 			HttpContext.Session.Remove("studentId");
 			HttpContext.Session.SetInt32("correctAns", 0);
-			HttpContext.Session.Remove("studentId");
+			HttpContext.Session.Remove("totalQuestion");
 			HttpContext.Session.SetInt32("totalQuestion", 0);
 		}
 
