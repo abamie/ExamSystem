@@ -28,6 +28,8 @@ namespace Exam.DataAccess.Repository
 				objFromDb.RollNo = obj.RollNo;
 				objFromDb.Address = obj.Address;
 				objFromDb.Standard = obj.Standard;
+				objFromDb.UserId = obj.UserId;
+				objFromDb.Password = obj.Password;
 				if (obj.ImageUrl != null)
 				{
 					objFromDb.ImageUrl = obj.ImageUrl;
