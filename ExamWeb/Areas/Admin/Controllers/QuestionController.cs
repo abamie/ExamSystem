@@ -1,4 +1,5 @@
 ﻿using Exam.DataAccess.Repository.IRepository;
+using Exam.Model;
 using Exam.Model.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -53,14 +54,31 @@ namespace ExamWeb.Areas.Admin.Controllers
 
 		}
 
+		private bool IsDiaplayOrderAvailable(int displayorder)
+		{
+			bool isfound=false;
+			
+
+			if (displayorder > 0)
+			{
+				Question qust= _unitOfWork.Question.GetFirstOrDefault(u => u.DisplayOrder == displayorder);
+				if(qust!=null)
+				{
+					isfound=true; 
+				}
+			}
+			return isfound;
+		}
+
 		//POST
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public IActionResult Upsert(QuestionVM obj, IFormFile? file)
 		{
-
+			bool isfound = false;
 			if (ModelState.IsValid)
 			{
+				//isfound = IsDiaplayOrderAvailable(obj.Question.DisplayOrder);
 				if (obj.Question.Id == 0)
 				{
 					_unitOfWork.Question.Add(obj.Question);
