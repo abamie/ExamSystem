@@ -27,7 +27,7 @@ namespace Exam.DataAccess.Repository
 				objFromDb.Name = obj.Name;
 				objFromDb.RollNo = obj.RollNo;
 				objFromDb.Address = obj.Address;
-				objFromDb.Standard = obj.Standard;
+				objFromDb.StandardId = obj.StandardId;
 				objFromDb.UserId = obj.UserId;
 				objFromDb.Password = obj.Password;
 				if (obj.ImageUrl != null)
